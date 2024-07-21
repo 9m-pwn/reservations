@@ -50,28 +50,29 @@ describe('ReservationsController', () => {
   });
 
   describe('reserveTables', () => {
-    it('should reserve tables successfully', () => {
+    it('should reserve tables successfully', async () => {
       const customers = 6;
       const response = {
         message: 'Reservation successful',
-        bookingId: 'some-booking-id',
-        tablesBooked: 2,
-        remainingTables: 8,
+        data: {
+          bookingId: 'some-booking-id',
+          tablesBooked: 2,
+          remainingTables: 8,
+        }
       };
-
-      jest.spyOn(service, 'reserveTables').mockImplementation(() => (response as any));
-
-      expect(controller.reserveTables(customers)).toEqual(response);
+  
+      jest.spyOn(service, 'reserveTables').mockResolvedValue(response as any);
+  
+      await expect(controller.reserveTables(customers)).resolves.toEqual(response);
     });
-
-    it('should throw BadRequestException if customers is less than or equal to zero', () => {
+  
+    it('should throw BadRequestException if customers is less than or equal to zero', async () => {
       const customers = 0;
-
-      expect(() => controller.reserveTables(customers)).toThrow(
-        BadRequestException,
-      );
+  
+      await expect(controller.reserveTables(customers)).rejects.toThrow(BadRequestException);
     });
   });
+  
 
   describe('cancelReservation', () => {
     it('should cancel reservation successfully', () => {

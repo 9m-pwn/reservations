@@ -1,10 +1,9 @@
-// create HealthController class
-import { SkipInitializationCheck } from '@/guards/validate-initialize.decorator';
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('health')
 @Controller('health')
+@ApiExcludeController()
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);
   constructor() {}

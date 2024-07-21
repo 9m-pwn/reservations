@@ -42,17 +42,17 @@ export class ReservationsController {
 
   @Post('reserve')
   @ApiOperation({ summary: 'Reserve tables for customers' })
-  @ApiResponse({ status: 200, description: 'The tables have been reserved.' })
-  reserveTables(@Query('customers') customers: number): ReserveTablesResponseDto {
+  @ApiResponse({ status: 201, description: 'The tables have been reserved.' })
+  async reserveTables(@Query('customers') customers: number): Promise<ReserveTablesResponseDto> {
     if (customers <= 0) {
       throw new BadRequestException(
         'Number of customers must be greater than zero',
       );
     }
-    return this.reservationsService.reserveTables(customers);
+    return await this.reservationsService.reserveTables(customers);
   }
 
-  @Delete('cancel-reservation')
+  @Delete('cancel')
   @ApiOperation({ summary: 'Cancel a reservation' })
   @ApiResponse({
     status: 200,
@@ -62,7 +62,7 @@ export class ReservationsController {
     return this.reservationsService.cancelReservation(bookingId);
   }
 
-  @Get('all-reservations')
+  @Get('all')
   @ApiOperation({ summary: 'Get all reservations' })
   @ApiResponse({ status: 200, description: 'All reservations returned.' })
   getAllReservations(): GetAllReservationsResponseDto {

@@ -39,8 +39,8 @@ describe('ReservationsService', () => {
       service.initializeTables(10); // Initialize tables before each reservation test
     });
 
-    it('should reserve tables successfully', () => {
-      const result = service.reserveTables(8); // Reserve 8 customers (2 tables)
+    it('should reserve tables successfully', async () => {
+      const result = await service.reserveTables(8); // Reserve 8 customers (2 tables)
       expect(result).toEqual({
         message: 'Reservation successful',
         data: {
@@ -51,23 +51,28 @@ describe('ReservationsService', () => {
       });
     });
 
-    it('should throw error if not enough tables are available', () => {
-      service.reserveTables(8); // Reserve 8 customers (2 tables)
-      expect(() => service.reserveTables(99)).toThrow(BadRequestException);
+    it('should throw error if not enough tables are available', async () => {
+      await service.reserveTables(8); // Reserve 8 customers (2 tables)
+      await expect(() => service.reserveTables(99)).rejects.toThrow(BadRequestException);
     });
 
-    it('should throw error if customers number is zero or negative', () => {
-      expect(() => service.reserveTables(0)).toThrow(BadRequestException);
-      expect(() => service.reserveTables(-5)).toThrow(BadRequestException);
+    it('should throw error if customers number is zero or negative', async () => {
+      await expect(() => service.reserveTables(0)).rejects.toThrow(BadRequestException);
+      await expect(() => service.reserveTables(-5)).rejects.toThrow(BadRequestException);
+    });
+
+    it('should throw error if reservation queue is locked', async () => {
+      (service as any).lockQueue();
+      await expect(() => service.reserveTables(4)).rejects.toThrow(BadRequestException);
     });
   });
 
   describe('cancelReservation', () => {
     let bookingId: string;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       service.initializeTables(10);
-      const result = service.reserveTables(4); // Reserve 4 customers (1 table)
+      const result = await service.reserveTables(4); // Reserve 4 customers (1 table)
       bookingId = result.data.bookingId;
     });
 
@@ -93,9 +98,9 @@ describe('ReservationsService', () => {
   });
 
   describe('getAllReservations', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       service.initializeTables(10);
-      service.reserveTables(4); // Reserve 4 customers
+      await service.reserveTables(4); // Reserve 4 customers
     });
 
     it('should return all reservations', () => {
