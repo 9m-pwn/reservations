@@ -6,6 +6,7 @@ import {
   Get,
   UseGuards,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ReservationsService } from '../services/reservations.service';
@@ -38,6 +39,14 @@ export class ReservationsController {
       throw new BadRequestException('Total tables must be greater than zero');
     }
     return this.reservationsService.initializeTables(totalTables);
+  }
+
+  @Post('reset')
+  @HttpCode(205)
+  @ApiOperation({ summary: 'Reset the tables' })
+  @ApiResponse({ status: 205, description: 'The tables have been reset.' })
+  resetTables() {
+    this.reservationsService.resetTables();
   }
 
   @Post('reserve')

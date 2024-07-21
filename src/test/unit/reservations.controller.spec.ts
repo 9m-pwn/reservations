@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReservationsController } from '../controllers/reservations.controller';
-import { ReservationsService } from '../services/reservations.service';
+import { ReservationsController } from '../../reservations/controllers/reservations.controller';
+import { ReservationsService } from '../../reservations/services/reservations.service';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { InitializationGuard } from '../../guards/validate-initialize.decorator';
 
@@ -24,6 +24,10 @@ describe('ReservationsController', () => {
 
     controller = module.get<ReservationsController>(ReservationsController);
     service = module.get<ReservationsService>(ReservationsService);
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   describe('initializeTables', () => {

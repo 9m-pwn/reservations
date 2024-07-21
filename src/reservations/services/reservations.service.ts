@@ -92,6 +92,20 @@ export class ReservationsService {
       this.releaseQueue();
     }
   }
+
+  /**
+   * Reset the tables to their initial state.
+   */
+  resetTables() {
+    this.totalTables = 0;
+    this.availableTables = 0;
+    this.tablesInitialized = false;
+    this.reservationsMap.clear();
+
+    return {
+      message: 'Tables have been reset',
+    };
+  }
   
   /**
    * Cancel a reservation based on the booking ID.

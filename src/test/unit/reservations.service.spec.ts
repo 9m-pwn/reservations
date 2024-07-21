@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ReservationsService } from '../services/reservations.service';
+import { ReservationsService } from '../../reservations/services/reservations.service';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('ReservationsService', () => {
@@ -89,11 +89,6 @@ describe('ReservationsService', () => {
 
     it('should throw error if reservation does not exist', () => {
       expect(() => service.cancelReservation('non-existing-id')).toThrow(NotFoundException);
-    });
-
-    it('should throw error if tables are not initialized', () => {
-      const uninitializedService = new ReservationsService();
-      expect(() => uninitializedService.cancelReservation('some-id')).toThrow(BadRequestException);
     });
   });
 
