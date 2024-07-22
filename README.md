@@ -1,4 +1,4 @@
-# Reservation API
+# Reservations API
 This is a simple Reservation API built with NestJS. It allows for 
 - initializing tables
 - reserving tables for customers
@@ -6,9 +6,13 @@ This is a simple Reservation API built with NestJS. It allows for
 - retrieving all reservations.
 - reset tables
 
+<br>
+
 ## Prerequisites
 - Node.js (version 18 or higher)
 - Docker (if you want to run the project using Docker)
+
+<br> 
 
 ## 1. Installation
 
@@ -92,6 +96,7 @@ $ npm start
 - **Responses:**
   - `200 OK`: Returns all reservations.
   - `404 Not Found`: No reservations found.
+
 <br>
 
 ---

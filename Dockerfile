@@ -1,7 +1,7 @@
 # docker file for node version 20 
 FROM node:20-alpine
 
-# Install curl
+# Install curl for healthcheck
 RUN apk add --no-cache curl
 
 # Create app directory
