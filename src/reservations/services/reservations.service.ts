@@ -175,7 +175,6 @@ export class ReservationsService {
   private async lockQueue(): Promise<void> {
     const maxWaitTime = 5000; // Maximum wait time in milliseconds
     const startTime = Date.now();
-
     while (this.queueLock) {
       if (Date.now() - startTime > maxWaitTime) {
         throw new Error('Unable to acquire lock within the maximum wait time');

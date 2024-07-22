@@ -4,6 +4,7 @@ This is a simple Reservation API built with NestJS. It allows for
 - reserving tables for customers
 - canceling reservations
 - retrieving all reservations.
+- reset tables
 
 ## Prerequisites
 - Node.js (version 18 or higher)
@@ -91,15 +92,35 @@ $ npm start
 - **Responses:**
   - `200 OK`: Returns all reservations.
   - `404 Not Found`: No reservations found.
+<br>
 
+---
+
+5. ### Reset tables
+
+- **URL:** `/reservations/reset`
+- **Method:** POST
+- **Responses:**
+  - `205 OK`: Returns null
 <br>
 
 <br><br>
 
-# Test 
+# Testing
 
-#### you can use the command below for testing spec files
+#### There are unit test and integration test, you can use the command below for testing
 
+
+### Unit test
 ```bash
-$ npm test
+$ npm run test:unit
 ```
+
+### Integration test
+```bash
+$ npm run test:e2e
+```
+
+<br>
+
+<br><br>
